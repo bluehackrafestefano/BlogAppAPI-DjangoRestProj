@@ -209,3 +209,7 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_EXPOSE_HEADERS = (
     'Access-Control-Allow-Origin: *',
 )
+
+
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"

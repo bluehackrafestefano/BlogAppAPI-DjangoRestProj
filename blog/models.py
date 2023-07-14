@@ -23,6 +23,22 @@ class Blog(models.Model):
     status = models.CharField(choices=STATUS_CHOICES, max_length=1, default='d')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    @property
+    def view_count(self):
+        return self.postviewrecord_set.count()
+
+    @property
+    def like_count(self):
+        return self.like_set.count()
+
+    @property
+    def comment_count(self):
+        return self.comment_set.count()
+
+    @property
+    def comments(self):
+        return self.comment_set.all()
     
     def __str__(self):
         return self.title
