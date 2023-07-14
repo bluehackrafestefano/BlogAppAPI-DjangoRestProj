@@ -20,20 +20,19 @@ class CommentSerializer(serializers.ModelSerializer):
 class BlogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Blog
-        # fields = (
-        #     'id',
-        #     'title',
-        #     'created',
-        #     'updated'
-        #     'content',
-        #     'image',
-        #     'slug',
-        #     'status',
-        #     'category',
-        #     'author',
-        #     'view_count',
-        #     'like_count',
-        #     'comment_count',
-        #     'comments',
-        # )
-        fields = '__all__'
+        fields = (
+            "id",
+            "title",
+            "created",
+            "updated",
+            "content",
+            "image",
+            "slug",
+            "status",
+            "category",
+            "author",
+            "view_count",
+            "like_count",
+            "comment_count",
+            "comments",
+        )
