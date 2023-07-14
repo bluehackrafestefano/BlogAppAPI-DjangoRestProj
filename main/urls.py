@@ -9,9 +9,9 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Flight Reservation API",
+        title="Blog App API",
         default_version="v1.0.0",
-        description="Flight Reservation API help your travelers find the perfect flight.",
+        description="Blog App API enables your users to create blogs.",
         terms_of_service="#",
         contact=openapi.Contact(email="rafe@clarusway.com"),  # Change e-mail on this line!
         license=openapi.License(name="BSD License"),
@@ -32,5 +32,5 @@ urlpatterns = [
     # For debug toolbar
     path('__debug__/', include('debug_toolbar.urls')),
     path('users/', include('users.urls')),
-    # path('flight/', include('flight.urls')),
+    path('blog/', include('blog.urls')),
 ]
