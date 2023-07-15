@@ -26,7 +26,7 @@ class Blog(models.Model):
 
     @property
     def view_count(self):
-        return self.postviewrecord_set.count()
+        return self.postviewrecords_set.count()
 
     @property
     def like_count(self):

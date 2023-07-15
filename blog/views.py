@@ -7,6 +7,7 @@ from .serializers import (
 from .models import (
     Blog,
     Comment,
+    PostViewRecords,
 )
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -23,6 +24,12 @@ class BlogViewset(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+    def get_object(self):
+        obj = super().get_object()
+        # if self.request.user.is_authenticated():
+        PostViewRecords.objects.get_or_create(viewer=self.request.user, blog=obj)
+        return obj
 
 
 class CommentView(CreateAPIView):
