@@ -8,10 +8,13 @@ from .models import (
     Blog,
     Comment,
     PostViewRecords,
+    Like
 )
 from rest_framework.generics import CreateAPIView
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from .permissions import IsOwnerOrStaffOrReadOnly
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 
 class BlogViewset(ModelViewSet):
@@ -35,6 +38,24 @@ class BlogViewset(ModelViewSet):
 class CommentView(CreateAPIView):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
+    permission_classes = [IsAuthenticated, IsOwnerOrStaffOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(commentor=self.request.user)
+
+
+class LikeView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, slug):
+        obj = Blog.objects.get(slug=slug)
+        like_qs = Like.objects.filter(liker=self.request.user, blog=obj)
+        if like_qs.exists():
+            like_qs[0].delete()
+        else:
+            Like.objects.create(liker=self.request.user, blog=obj)
+
+        data = {
+            "message":"Like process done"
+        }
+        return Response(data)
