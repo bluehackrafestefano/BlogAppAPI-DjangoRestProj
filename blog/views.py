@@ -9,11 +9,17 @@ from .models import (
     Comment,
 )
 from rest_framework.generics import CreateAPIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from .permissions import IsOwnerOrStaffOrReadOnly
 
 
 class BlogViewset(ModelViewSet):
     serializer_class = BlogSerializer
     queryset = Blog.objects.filter(status='p')
+    permission_classes = [
+        IsAuthenticatedOrReadOnly, 
+        IsOwnerOrStaffOrReadOnly
+        ]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
