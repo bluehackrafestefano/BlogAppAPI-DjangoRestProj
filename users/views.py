@@ -36,3 +36,21 @@ def logout(request):
         'message':'Logged out succesfully!'
     }
     return Response(data, status=status.HTTP_200_OK)
+
+
+from .serializers import ProfileSerializer
+from .models import Profile
+from rest_framework.generics import RetrieveUpdateAPIView
+from rest_framework.permissions import IsAuthenticated
+
+
+class ProfileCreateView(CreateAPIView):
+    serializer_class = ProfileSerializer
+    queryset = Profile.objects.all()
+    permission_classes = [IsAuthenticated]
+
+
+class ProfileUpdateView(RetrieveUpdateAPIView):
+    serializer_class = ProfileSerializer
+    queryset = Profile.objects.all()
+    permission_classes = [IsAuthenticated]
