@@ -15,6 +15,9 @@ class BlogViewset(ModelViewSet):
     serializer_class = BlogSerializer
     queryset = Blog.objects.filter(status='p')
 
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
 
 class CommentView(CreateAPIView):
     serializer_class = CommentSerializer
