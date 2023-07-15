@@ -26,6 +26,7 @@ class BlogSerializer(serializers.ModelSerializer):
     comments = CommentSerializer(many=True, read_only=True)
 
     author = serializers.StringRelatedField()
+    category = serializers.StringRelatedField()
 
     class Meta:
         model = Blog
